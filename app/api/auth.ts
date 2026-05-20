@@ -86,34 +86,37 @@ export async function auth(req: NextRequest, modelProvider: ModelProvider) {
   // check if it is openai api key or user token
   const { accessCode, apiKey, oidcToken } = parseApiKey(authToken);
 
+  const serverConfig = getServerSideConfig();
+
   // OIDC token verification
   if (oidcToken) {
     try {
       await verifyOidcToken(oidcToken);
       console.log("[Auth] OIDC token verified");
-      const serverConfig = getServerSideConfig();
       const systemApiKey = getSystemApiKey(serverConfig, modelProvider, req);
       if (systemApiKey) {
         req.headers.set("Authorization", `Bearer ${systemApiKey}`);
       }
       return { error: false };
-    } catch (e) {
-      console.error("[Auth] OIDC token verification failed:", e);
+    } catch (e: any) {
+      const errMsg = e?.message || String(e);
+      console.error("[Auth] OIDC token verification failed:", errMsg);
       return {
         error: true,
-        msg: "invalid or expired OIDC token",
+        msg: `OIDC verification failed: ${errMsg}`,
       };
     }
   }
 
-  const hashedCode = md5.hash(accessCode ?? "").trim();
+  // When OIDC is enabled, reject any request without a valid OIDC token
+  if (serverConfig.isOidc) {
+    return {
+      error: true,
+      msg: "OIDC authentication required",
+    };
+  }
 
-  const serverConfig = getServerSideConfig();
-  console.log("[Auth] allowed hashed codes: ", [...serverConfig.codes]);
-  console.log("[Auth] got access code:", accessCode);
-  console.log("[Auth] hashed access code:", hashedCode);
-  console.log("[User IP] ", getIP(req));
-  console.log("[Time] ", new Date().toLocaleString());
+  const hashedCode = md5.hash(accessCode ?? "").trim();
 
   if (serverConfig.needCode && !serverConfig.codes.has(hashedCode) && !apiKey) {
     return {
@@ -131,7 +134,6 @@ export async function auth(req: NextRequest, modelProvider: ModelProvider) {
 
   // if user does not provide an api key, inject system api key
   if (!apiKey) {
-    const serverConfig = getServerSideConfig();
     const systemApiKey = getSystemApiKey(serverConfig, modelProvider, req);
     if (systemApiKey) {
       console.log("[Auth] use system api key");
