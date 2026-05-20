@@ -1,7 +1,6 @@
 import { getClientConfig } from "../config/client";
 import { SubmitKey } from "../store/config";
 import type { PartialLocaleType } from "./index";
-import { SAAS_CHAT_UTM_URL } from "@/app/constant";
 // if you are adding a new translation, please use PartialLocaleType instead of LocaleType
 
 const isApp = !!getClientConfig()?.isApp;
@@ -10,10 +9,10 @@ const sk: PartialLocaleType = {
   Error: {
     Unauthorized: isApp
       ? `😆 Rozhovor narazil na nejaké problémy, nebojte sa:
-    \\ 1️⃣ Ak chcete začať bez konfigurácie, [kliknite sem, aby ste okamžite začali chatovať 🚀](${SAAS_CHAT_UTM_URL})
+    \\ 1️⃣ Ak chcete začať bez konfigurácie, [kliknite sem, aby ste okamžite začali chatovať 🚀](/#/settings)
     \\ 2️⃣ Ak chcete používať svoje vlastné zdroje OpenAI, kliknite [sem](/#/settings), aby ste upravili nastavenia ⚙️`
       : `😆 Rozhovor narazil na nejaké problémy, nebojte sa:
-    \ 1️⃣ Ak chcete začať bez konfigurácie, [kliknite sem, aby ste okamžite začali chatovať 🚀](${SAAS_CHAT_UTM_URL})
+    \ 1️⃣ Ak chcete začať bez konfigurácie, [kliknite sem, aby ste okamžite začali chatovať 🚀](/#/settings)
     \ 2️⃣ Ak používate verziu súkromného nasadenia, kliknite [sem](/#/auth), aby ste zadali prístupový kľúč 🔑
     \ 3️⃣ Ak chcete používať svoje vlastné zdroje OpenAI, kliknite [sem](/#/settings), aby ste upravili nastavenia ⚙️
  `,

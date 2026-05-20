@@ -1,7 +1,6 @@
 import { SubmitKey } from "../store/config";
 import { PartialLocaleType } from "../locales/index";
 import { getClientConfig } from "../config/client";
-import { SAAS_CHAT_UTM_URL } from "@/app/constant";
 const isApp = !!getClientConfig()?.isApp;
 
 const pt: PartialLocaleType = {
@@ -9,10 +8,10 @@ const pt: PartialLocaleType = {
   Error: {
     Unauthorized: isApp
       ? `😆 A conversa encontrou alguns problemas, não se preocupe:
-   \\ 1️⃣ Se você quiser começar sem configuração, [clique aqui para começar a conversar imediatamente 🚀](${SAAS_CHAT_UTM_URL})
+   \\ 1️⃣ Se você quiser começar sem configuração, [clique aqui para começar a conversar imediatamente 🚀](/#/settings)
    \\ 2️⃣ Se você deseja usar seus próprios recursos OpenAI, clique [aqui](/#/settings) para modificar as configurações ⚙️`
       : `😆 A conversa encontrou alguns problemas, não se preocupe:
-   \ 1️⃣ Se você quiser começar sem configuração, [clique aqui para começar a conversar imediatamente 🚀](${SAAS_CHAT_UTM_URL})
+   \ 1️⃣ Se você quiser começar sem configuração, [clique aqui para começar a conversar imediatamente 🚀](/#/settings)
    \ 2️⃣ Se você estiver usando uma versão de implantação privada, clique [aqui](/#/auth) para inserir a chave de acesso 🔑
    \ 3️⃣ Se você deseja usar seus próprios recursos OpenAI, clique [aqui](/#/settings) para modificar as configurações ⚙️
 `,

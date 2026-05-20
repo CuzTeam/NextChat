@@ -1,7 +1,6 @@
 import { SubmitKey } from "../store/config";
 import type { PartialLocaleType } from "./index";
 import { getClientConfig } from "../config/client";
-import { SAAS_CHAT_UTM_URL } from "@/app/constant";
 const isApp = !!getClientConfig()?.isApp;
 
 const tr: PartialLocaleType = {
@@ -9,10 +8,10 @@ const tr: PartialLocaleType = {
   Error: {
     Unauthorized: isApp
       ? `😆 Sohbet bazı sorunlarla karşılaştı, endişelenmeyin:
-    \\ 1️⃣ Eğer sıfır yapılandırma ile başlamak istiyorsanız, [buraya tıklayarak hemen sohbete başlayın 🚀](${SAAS_CHAT_UTM_URL})
+    \\ 1️⃣ Eğer sıfır yapılandırma ile başlamak istiyorsanız, [buraya tıklayarak hemen sohbete başlayın 🚀](/#/settings)
     \\ 2️⃣ Kendi OpenAI kaynaklarınızı kullanmak istiyorsanız, [buraya tıklayarak](/#/settings) ayarları değiştirin ⚙️`
       : `😆 Sohbet bazı sorunlarla karşılaştı, endişelenmeyin:
-    \ 1️⃣ Eğer sıfır yapılandırma ile başlamak istiyorsanız, [buraya tıklayarak hemen sohbete başlayın 🚀](${SAAS_CHAT_UTM_URL})
+    \ 1️⃣ Eğer sıfır yapılandırma ile başlamak istiyorsanız, [buraya tıklayarak hemen sohbete başlayın 🚀](/#/settings)
     \ 2️⃣ Eğer özel dağıtım sürümü kullanıyorsanız, [buraya tıklayarak](/#/auth) erişim anahtarını girin 🔑
     \ 3️⃣ Kendi OpenAI kaynaklarınızı kullanmak istiyorsanız, [buraya tıklayarak](/#/settings) ayarları değiştirin ⚙️
  `,
