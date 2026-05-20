@@ -6,7 +6,7 @@ function OIDCProvider(options: OIDCUserConfig<Record<string, unknown>>) {
     id: "oidc",
     name: "SSO",
     type: "oidc" as const,
-    ...options,
+    options,
   };
 }
 
