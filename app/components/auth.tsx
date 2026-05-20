@@ -53,9 +53,15 @@ export function AuthPage() {
             access.oidcToken = data.accessToken;
           });
           navigate(Path.Chat);
+          return;
         }
       } catch (e) {
         console.error("[OIDC] Failed to check session:", e);
+      }
+
+      // If OIDC is enabled and user has no valid token, auto-redirect to OIDC login
+      if (accessStore.isOidc && !accessStore.isValidOidc()) {
+        handleOidcLogin();
       }
     };
     checkOidcSession();

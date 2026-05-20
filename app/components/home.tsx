@@ -165,6 +165,7 @@ function Screen() {
   const isAuth = location.pathname === Path.Auth;
   const isSd = location.pathname === Path.Sd;
   const isSdNew = location.pathname === Path.SdNew;
+  const accessStore = useAccessStore();
 
   const isMobileScreen = useMobileScreen();
   const shouldTightBorder =
@@ -174,6 +175,10 @@ function Screen() {
     loadAsyncGoogleFont();
   }, []);
 
+  // Auto-redirect to auth page if not authorized
+  const needAuth =
+    !isAuth && accessStore.enabledAccessControl() && !accessStore.isAuthorized();
+
   if (isArtifact) {
     return (
       <Routes>
@@ -182,7 +187,7 @@ function Screen() {
     );
   }
   const renderContent = () => {
-    if (isAuth) return <AuthPage />;
+    if (isAuth || needAuth) return <AuthPage />;
     if (isSd) return <Sd />;
     if (isSdNew) return <Sd />;
     return (
