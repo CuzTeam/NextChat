@@ -1,0 +1,23 @@
+{
+  "id": 58132,
+  "name": "NextChat",
+  "abbrName": "NE",
+  "description": "",
+  "devMode": 2,
+  "status": null,
+  "url": null,
+  "databaseHost": null,
+  "databasePort": null,
+  "databaseName": null,
+  "databaseUsername": null,
+  "databasePassword": null,
+  "projectInfo": {
+    "JOYCODE": {
+      "jd_EDhwRMUAkTbf": [
+        {
+          "jd_EDhwRMUAkTbf": 58132
+        }
+      ]
+    }
+  }
+}

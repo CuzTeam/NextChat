@@ -139,6 +139,9 @@ const DEFAULT_ACCESS_STATE = {
   ai302Url: DEFAULT_AI302_URL,
   ai302ApiKey: "",
 
+  // OIDC token
+  oidcToken: "",
+
   // server config
   needCode: true,
   hideUserApiKey: false,
@@ -148,6 +151,7 @@ const DEFAULT_ACCESS_STATE = {
   customModels: "",
   defaultModel: "",
   visionModels: "",
+  isOidc: false,
 
   // tts config
   edgeTTSVoiceName: "zh-CN-YunxiNeural",
@@ -226,6 +230,16 @@ export const useAccessStore = createPersistStore(
       return ensure(get(), ["siliconflowApiKey"]);
     },
 
+    isValidOidc() {
+      const token = get().oidcToken;
+      if (!token || token.length === 0) return false;
+      try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        if (payload.exp && payload.exp * 1000 < Date.now()) return false;
+      } catch {}
+      return true;
+    },
+
     isAuthorized() {
       this.fetch();
 
@@ -245,6 +259,7 @@ export const useAccessStore = createPersistStore(
         this.isValidXAI() ||
         this.isValidChatGLM() ||
         this.isValidSiliconFlow() ||
+        this.isValidOidc() ||
         !this.enabledAccessControl() ||
         (this.enabledAccessControl() && ensure(get(), ["accessCode"]))
       );

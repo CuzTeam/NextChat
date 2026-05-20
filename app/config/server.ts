@@ -96,6 +96,12 @@ declare global {
       DEFAULT_INPUT_TEMPLATE?: string;
 
       ENABLE_MCP?: string; // enable mcp functionality
+
+      // OIDC authentication
+      OIDC_ISSUER?: string;
+      OIDC_CLIENT_ID?: string;
+      OIDC_CLIENT_SECRET?: string;
+      NEXTAUTH_SECRET?: string;
     }
   }
 }
@@ -274,5 +280,15 @@ export const getServerSideConfig = () => {
     visionModels,
     allowedWebDavEndpoints,
     enableMcp: process.env.ENABLE_MCP === "true",
+
+    isOidc: !!(
+      process.env.OIDC_ISSUER &&
+      process.env.OIDC_CLIENT_ID &&
+      process.env.OIDC_CLIENT_SECRET
+    ),
+    oidcIssuer: process.env.OIDC_ISSUER,
+    oidcClientId: process.env.OIDC_CLIENT_ID,
+    oidcClientSecret: process.env.OIDC_CLIENT_SECRET,
+    nextauthSecret: process.env.NEXTAUTH_SECRET,
   };
 };

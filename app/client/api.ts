@@ -1,6 +1,7 @@
 import { getClientConfig } from "../config/client";
 import {
   ACCESS_CODE_PREFIX,
+  OIDC_TOKEN_PREFIX,
   ModelProvider,
   ServiceProvider,
 } from "../constant";
@@ -359,6 +360,10 @@ export function getHeaders(ignoreHeaders: boolean = false) {
   } else if (isEnabledAccessControl && validString(accessStore.accessCode)) {
     headers["Authorization"] = getBearerToken(
       ACCESS_CODE_PREFIX + accessStore.accessCode,
+    );
+  } else if (validString(accessStore.oidcToken)) {
+    headers["Authorization"] = getBearerToken(
+      OIDC_TOKEN_PREFIX + accessStore.oidcToken,
     );
   }
 

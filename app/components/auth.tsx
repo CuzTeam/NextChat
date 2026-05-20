@@ -39,6 +39,31 @@ export function AuthPage() {
     });
   }; // Reset access code to empty string
 
+  // OIDC login handler
+  const handleOidcLogin = () => {
+    // Redirect to Auth.js OIDC login endpoint
+    window.location.href = "/api/auth/signin/oidc";
+  };
+
+  useEffect(() => {
+    // Check if returning from OIDC callback with session
+    const checkOidcSession = async () => {
+      try {
+        const res = await fetch("/api/auth/session");
+        const data = await res.json();
+        if (data.authenticated && data.accessToken) {
+          accessStore.update((access) => {
+            access.oidcToken = data.accessToken;
+          });
+          navigate(Path.Chat);
+        }
+      } catch (e) {
+        console.error("[OIDC] Failed to check session:", e);
+      }
+    };
+    checkOidcSession();
+  }, []);
+
   useEffect(() => {
     if (getClientConfig()?.isApp) {
       navigate(Path.Settings);
@@ -110,6 +135,13 @@ export function AuthPage() {
       ) : null}
 
       <div className={styles["auth-actions"]}>
+        {accessStore.isOidc && (
+          <IconButton
+            text={Locale.Auth.OidcLogin ?? "SSO Login"}
+            type="primary"
+            onClick={handleOidcLogin}
+          />
+        )}
         <IconButton
           text={Locale.Auth.Confirm}
           type="primary"
