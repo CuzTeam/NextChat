@@ -7,6 +7,7 @@ function OIDCProvider(options: OIDCUserConfig<Record<string, unknown>>) {
     name: "SSO",
     type: "oidc" as const,
     options,
+    client: { token_endpoint_auth_method: "client_secret_post" },
   };
 }
 
